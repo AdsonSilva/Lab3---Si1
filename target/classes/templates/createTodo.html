@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+
+    <title>New TodoList</title>
+</head>
+<body>
+    <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3" id="layout">
+
+        <h1 id="titleText">Create a new TodoList</h1>
+
+        <form th:action="@{/createTodo}" method="post" enctype="multipart/form-data">
+            <label for="todoNameText">Choose a name for your new TodoList</label>
+            <div class="input-group">
+                <span class="input-group-addon" id="todoName">TodoList Name</span>
+                <input type="text" name="name" class="form-control" id="todoNameText" aria-describedby="basic-addon3"/>
+            </div>
+            <input type="submit" id="createList" class="btn btn-success" value="Create"/>
+
+        </form>
+
+
+    </div>
+</body>
+</html>

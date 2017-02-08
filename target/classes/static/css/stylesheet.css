@@ -1,0 +1,33 @@
+body{
+    margin: 30px 30px 30px 30px;
+}
+
+.done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+#tasks {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#tasks li{
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid #eee;
+}
+
+.deleteTask {
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+
+input[type=checkbox] {
+    margin-right: 15px;
+}
+
+#textPercent {
+    margin-left: 40%;
+}
