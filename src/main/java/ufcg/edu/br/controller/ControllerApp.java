@@ -1,6 +1,7 @@
 package ufcg.edu.br.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -96,6 +97,26 @@ public class ControllerApp {
         model.addAttribute("tasks", taskRepository.findByIdList(idList));
         model.addAttribute("todoListName", todoListRepository.findById(idList).getName());
         return "tasks";
+    }
+
+    @RequestMapping(value = "/task/create", method = RequestMethod.GET)
+    public String createTaks(Model model){
+        return "createTask";
+    }
+
+    @RequestMapping(value = "task/complete/{id}", method = RequestMethod.GET)
+    public String completeTask(@PathVariable String id, Model model){
+        Task task = taskRepository.findById(id);
+        taskRepository.delete(task.getId());
+        System.out.println(task.isStatus());
+        if(task.isStatus()){
+            task.setStatus(false);
+        }else {
+            task.setStatus(true);
+        }
+        taskRepository.save(task);
+
+        return "redirect:/task/getByList/" + taskRepository.findById(id).getIdList();
     }
 
     @RequestMapping(value = "/task/create", method = RequestMethod.POST)

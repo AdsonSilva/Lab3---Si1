@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface TaskRepository extends MongoRepository<Task, String> {
 
+   public Task findById(String id);
     public List<Task> findByCategory(String category);
-
     public List<Task> findByIdList(String idList);
 
 }

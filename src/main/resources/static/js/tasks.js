@@ -3,6 +3,7 @@ var checkBoxes, boxesChekeds;
 
 $(document).ready(function () {
 
+
     $('#check').on('change','.completeTask', completeTask);
 
     function completeTask() {
