@@ -11,5 +11,5 @@ import java.util.List;
 public interface TodoListRepository extends MongoRepository<TodoList, String>{
 
     public TodoList findByName(String name);
-
+    public TodoList findById(String id);
 }

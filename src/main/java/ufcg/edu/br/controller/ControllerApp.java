@@ -34,6 +34,11 @@ public class ControllerApp {
         return "index";
     }
 
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public String getTasks(Model model){
+        return "tasks";
+    }
+
     @RequestMapping(value = "/createTodo", method = RequestMethod.GET)
     public String addTodo(Model model){
         return "createTodo";
@@ -87,8 +92,10 @@ public class ControllerApp {
     }
 
     @RequestMapping(value = "/task/getByList/{idList}", method = RequestMethod.GET)
-    public List<Task> getTasksByList(@PathVariable String idList) {
-        return taskRepository.findByIdList(idList);
+    public String getTasksByList(@PathVariable String idList, Model model) {
+        model.addAttribute("tasks", taskRepository.findByIdList(idList));
+        model.addAttribute("todoListName", todoListRepository.findById(idList).getName());
+        return "tasks";
     }
 
     @RequestMapping(value = "/task/create", method = RequestMethod.POST)

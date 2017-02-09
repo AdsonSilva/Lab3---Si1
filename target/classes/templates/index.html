@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
-    <th:block th:include="geral/head :: head"></th:block>
 <head >
-
+    <th:block th:include="geral/head :: head"></th:block>
 </head>
 
 <body>
@@ -14,7 +13,7 @@
                 <a th:href="@{'createTodo'}">Create a new Todo</a>
 
                 <div th:each="todoList : ${todoLists}">
-                    <a><label class="label-name-List" th:text="${todoList.name}"></label></a>
+                    <a th:text="${todoList.name}" th:href="@{'/task/getByList/' + ${todoList.id}}"></a>
                 </div>
 
             </div>
