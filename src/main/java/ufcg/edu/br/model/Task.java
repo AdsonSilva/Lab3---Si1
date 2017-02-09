@@ -78,7 +78,7 @@ public class Task {
         this.priority = priority;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

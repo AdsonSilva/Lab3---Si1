@@ -104,19 +104,25 @@ public class ControllerApp {
         return "createTask";
     }
 
+    @RequestMapping(value = "/task/create", method = RequestMethod.POST)
+    public String createTask(@ModelAttribute Task task,Model model){
+        taskRepository.save(task);
+    }
+
     @RequestMapping(value = "task/complete/{id}", method = RequestMethod.GET)
     public String completeTask(@PathVariable String id, Model model){
         Task task = taskRepository.findById(id);
         taskRepository.delete(task.getId());
-        System.out.println(task.isStatus());
-        if(task.isStatus()){
+
+        if(task.getStatus()){
             task.setStatus(false);
-        }else {
+        }else{
             task.setStatus(true);
         }
+
         taskRepository.save(task);
 
-        return "redirect:/task/getByList/" + taskRepository.findById(id).getIdList();
+        return "redirect:/task/getByList/" + task.getIdList();
     }
 
     @RequestMapping(value = "/task/create", method = RequestMethod.POST)
