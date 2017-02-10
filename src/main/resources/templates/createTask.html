@@ -21,20 +21,13 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="categoryText">Category</span>
+                <input type="text" name="category" class="form-control" aria-describedby="basic-addon1"/>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="categoryText">Priority</span>
                 <input type="text" name="priority" class="form-control" aria-describedby="basic-addon1"/>
             </div>
 
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Priority
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" name="priority" aria-labelledby="dropdownMenu1">
-                    <li><a href="#" value="Low">Low</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#" value="High">High</a></li>
-                </ul>
-            </div>
             <input type="submit" id="createTask" class="btn btn-success" value="Create"/>
         </form>
 

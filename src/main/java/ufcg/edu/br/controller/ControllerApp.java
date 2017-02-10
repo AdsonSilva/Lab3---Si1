@@ -5,6 +5,7 @@ import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import ufcg.edu.br.model.SubTask;
 import ufcg.edu.br.model.Task;
 import ufcg.edu.br.model.TodoList;
@@ -31,7 +32,11 @@ public class ControllerApp {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model){
-        model.addAttribute("todoLists", todoListRepository.findAll());
+        List<TodoList> todoLists = todoListRepository.findAll();
+        model.addAttribute("todoLists", todoLists );
+        model.addAttribute("tasksNotCompleteds", getNumOfTasksNotCompleted(todoLists));
+
+
         return "index";
     }
 
@@ -40,9 +45,21 @@ public class ControllerApp {
         return "tasks";
     }
 
-    @RequestMapping(value = "/createTodo", method = RequestMethod.GET)
+    @RequestMapping(value = "todoList/createTodo", method = RequestMethod.GET)
     public String addTodo(Model model){
         return "createTodo";
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public String deleteAllTodo(Model model){
+        subTaskRepository.deleteAll();
+        taskRepository.deleteAll();
+        todoListRepository.deleteAll();
+
+        List<TodoList> todoLists = todoListRepository.findAll();
+        model.addAttribute("todoLists", todoLists );
+        model.addAttribute("tasksNotCompleteds", getNumOfTasksNotCompleted(todoLists));
+        return "redirect:index.html";
     }
 
     @RequestMapping(value = "/createTodo", method = RequestMethod.POST)
@@ -73,12 +90,18 @@ public class ControllerApp {
         return todoListRepository.findByName(name);
     }
 
-    @RequestMapping(value = "/todoList/delete/{id}", method = RequestMethod.DELETE)
-    public List<TodoList> deleteTodoListById(@PathVariable String id) {
+    @RequestMapping(value = "/deleteTodoList/{id}", method = RequestMethod.GET)
+    public RedirectView deleteTodoListById(@PathVariable String id, Model model) {
         deleteTasksByIdList(id);
 
         todoListRepository.delete(id);
-        return todoListRepository.findAll();
+
+        List<TodoList> todoLists = todoListRepository.findAll();
+        model.addAttribute("todoLists", todoLists );
+        model.addAttribute("tasksNotCompleteds", getNumOfTasksNotCompleted(todoLists));
+
+        return new RedirectView("../index.html");
+
     }
 
 
@@ -130,11 +153,13 @@ public class ControllerApp {
         return "redirect:/task/getByList/" + task.getIdList();
     }
 
-    @RequestMapping(value = "/task/delete/{id}", method = RequestMethod.DELETE)
-    public List<Task> deleteTaskById(@PathVariable String id) {
+    @RequestMapping(value = "/task/delete/{id}", method = RequestMethod.GET)
+    public RedirectView deleteTaskById(@PathVariable String id, Model model) {
+        Task task = taskRepository.findById(id);
+        deleteSubTaskById(id);
         taskRepository.delete(id);
 
-        return taskRepository.findAll();
+        return new RedirectView("/task/getByList/" + task.getIdList());
     }
 
     private void deleteTasksByIdList(String idList){
@@ -144,6 +169,12 @@ public class ControllerApp {
                 deleteTaskById(task.getId());
             }
         }
+    }
+
+    private void deleteTaskById(String id) {
+        deleteSubTaskById(id);
+        taskRepository.delete(id);
+
     }
 
 
@@ -187,4 +218,15 @@ public class ControllerApp {
 
     }
 
+    private int getNumOfTasksNotCompleted(List<TodoList> todoLists){
+        int tasksNotCompleted = 0;
+        for(TodoList todolist : todoLists){
+            for (Task task : taskRepository.findByIdList(todolist.getId())){
+                if(task.getStatus() == false){
+                    tasksNotCompleted ++;
+                }
+            }
+        }
+        return tasksNotCompleted;
+    }
 }

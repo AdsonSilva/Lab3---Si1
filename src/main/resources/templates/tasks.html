@@ -2,40 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 <head >
     <th:block th:include="geral/head :: head"></th:block>
-    <script href="../static/js/tasks.js" th:href="@{/js/tasks.js}"></script>
 </head>
 
     <body>
 
         <div class="container">
+            <a class="bigButton" id="custombutton" th:href="@{'/index'}">Go back to the TodoLists</a>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                     <div class="page-header">
 
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                        </div>
                         <h1 th:text="${todoListName}"></h1>
-                        <a id="addTask" th:href="@{'/task/create/' + ${idList}}">Add a Task</a>
+                        <a class="bigButton" id="custombutton" th:href="@{'/task/create/' + ${idList}}">Add a Task</a>
                      </div>
-                    <div style="border: 1px solid black; border-radius: 5px;">
+
                         <ul id="tasks" th:each="task : ${tasks}">
                             <li>
                                 <span th:switch="${task.status}">
-                                    <div th:case="${false}">
-                                        <h0 th:text="${task.title}"></h0>
-                                         <a id="check" th:text="done" th:href="@{'/task/complete/' + ${task.id}}"/>
-                                    </div>
-                                    <div th:case="${true}" >
-                                        <strike th:text="${task.title}"></strike>
-                                        <a id="check" th:text=" undone" th:href="@{'/task/complete/' + ${task.id}}"/>
+                                    <div style="border: 1px solid black; border-radius: 5px;">
+                                        <div class="taskContent">
+                                            <div th:case="${false}">
+                                                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                                <h0 th:text="${task.title}"></h0>
+                                                <a class="col-md-offset-1 mediumButton changeTask" id="custombutton"
+                                                   th:text="done" th:href="@{'/task/complete/' + ${task.id}}"/>
+                                                <a class = "deleteTask" id="customDeletebutton" th:text="Delete"
+                                                   th:href="@{'/task/delete/' + ${task.id}}"></a>
+                                            </div>
+                                            <span th:case="${true}" >
+                                                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                                <strike th:text="${task.title}"></strike>
+                                                <a class="col-md-offset-1 mediumButton changeTask" id="customDeletebutton"
+                                                   th:text=" undone" th:href="@{'/task/complete/' + ${task.id}}"/>
+                                                <a class = "deleteTask" id="customDeletebutton" th:text="Delete"
+                                                   th:href="@{'/task/delete/' + ${task.id}}"></a><br />
+
+                                            </span>
+                                            <h0 th:text="'Description: ' + ${task.description}"></h0><br />
+                                            <h0 th:text="'Category: ' + ${task.category}"></h0><br />
+                                            <h0 th:text="'Priority: ' + ${task.priority}"></h0><br />
+
+                                        </div>
                                     </div>
                                 </span>
 
-                                <span class="glyphicon glyphicon-trash deleteTask"></span>
                             </li>
                         </ul>
-                    </div>
                 </div>
             </div>
         </div>

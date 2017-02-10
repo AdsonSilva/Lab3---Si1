@@ -2,50 +2,50 @@ body{
     margin: 30px 30px 30px 30px;
 }
 
-.done {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-#tasks {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#tasks li{
-    padding: 10px 0px 10px 0px;
-    border-bottom: 1px solid #eee;
-}
-
-.deleteTask {
-    float: right;
-    color: red;
-    cursor: pointer;
-}
-
-input[type=checkbox] {
-    margin-right: 15px;
-}
 
 #textPercent {
     margin-left: 40%;
 }
-#check{
-    font-size: x-large;
-}
 
-a:link, a:visited {
-    background-color: #5cb85c;
+a:link#customDeletebutton, a:visited#customDeletebutton {
+    background-color: red;
     color: white;
-    padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
 }
 
 
-a:hover, a:active {
+a:hover#customDeletebutton, a:active#customDeletebutton {
+    background-color: white;
+    color: red;
+}
+
+a:link#custombutton, a:visited#custombutton {
+    background-color: #5cb85c;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+a:hover#custombutton, a:active#custombutton {
     background-color: white;
     color: #5cb85c;
+}
+
+
+.bigButton{
+    margin-bottom: 10px;
+    padding: 14px 25px;
+}
+
+.taskContent{
+    margin: 10px 10px 10px 10px;
+}
+
+.deleteTask {
+    float: right;
+    color: red;
 }
