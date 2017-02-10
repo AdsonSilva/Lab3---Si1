@@ -99,14 +99,19 @@ public class ControllerApp {
         return "tasks";
     }
 
-    @RequestMapping(value = "/task/create", method = RequestMethod.GET)
-    public String createTaks(Model model){
+    @RequestMapping(value = "/task/create/{idList}", method = RequestMethod.GET)
+    public String createTaskView(Model model, @PathVariable String idList){
+        System.out.println(idList);
+        model.addAttribute("idList", idList);
         return "createTask";
     }
 
-    @RequestMapping(value = "/task/create", method = RequestMethod.POST)
-    public String createTask(@ModelAttribute Task task,Model model){
+    @RequestMapping(value = "/task/create/{idList}", method = RequestMethod.POST)
+    public String createTask(@ModelAttribute Task task, @PathVariable String idList, Model model){
+        System.out.println(idList);
+        task.setIdList(idList);
         taskRepository.save(task);
+        return "redirect:/task/getByList/" + idList;
     }
 
     @RequestMapping(value = "task/complete/{id}", method = RequestMethod.GET)
@@ -123,13 +128,6 @@ public class ControllerApp {
         taskRepository.save(task);
 
         return "redirect:/task/getByList/" + task.getIdList();
-    }
-
-    @RequestMapping(value = "/task/create", method = RequestMethod.POST)
-    public List<Task> createTask(@RequestBody Task task) {
-        taskRepository.save(task);
-
-        return taskRepository.findAll();
     }
 
     @RequestMapping(value = "/task/delete/{id}", method = RequestMethod.DELETE)

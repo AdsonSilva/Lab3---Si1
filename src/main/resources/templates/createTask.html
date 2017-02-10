@@ -9,18 +9,19 @@
 
         <h1 id="titleText">Create a new Task</h1>
 
-        <form th:action="@{/task/create}" method="post" enctype="multipart/form-data">
+        <form th:action="@{'/task/create/' + ${idList} }" method="post" enctype="multipart/form-data">
+
             <div class="input-group">
                 <span class="input-group-addon" id="titleText">Title</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon1"/>
+                <input type="text" name="title" class="form-control" aria-describedby="basic-addon1"/>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="Description">Description</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon1"/>
+                <input type="text" name="description" class="form-control" aria-describedby="basic-addon1"/>
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="categoryText">Category</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon1"/>
+                <input type="text" name="priority" class="form-control" aria-describedby="basic-addon1"/>
             </div>
 
             <div class="dropdown">
@@ -28,10 +29,10 @@
                     Priority
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Low</a></li>
+                <ul class="dropdown-menu" name="priority" aria-labelledby="dropdownMenu1">
+                    <li><a href="#" value="Low">Low</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">High</a></li>
+                    <li><a href="#" value="High">High</a></li>
                 </ul>
             </div>
             <input type="submit" id="createTask" class="btn btn-success" value="Create"/>
